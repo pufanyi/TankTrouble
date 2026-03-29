@@ -1,0 +1,25 @@
+# Rust
+/target/
+
+# Node
+node_modules/
+dist/
+
+# WASM build output
+/shared/pkg/
+
+# Environment
+.env*.local
+
+# IDE
+.vscode/
+.idea/
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
+
+# Lock files are committed (pnpm-lock.yaml, Cargo.lock)
