@@ -133,7 +133,7 @@ pub struct PhysicsWorld {
 
     tanks: HashMap<PlayerId, TankBody>,
     bullets: Vec<BulletBody>,
-    wall_colliders: Vec<ColliderHandle>,
+    _wall_colliders: Vec<ColliderHandle>,
     next_bullet_id: u32,
     pub tick: u64,
 
@@ -192,7 +192,7 @@ impl PhysicsWorld {
             ccd_solver: CCDSolver::new(),
             tanks: HashMap::new(),
             bullets: Vec::new(),
-            wall_colliders,
+            _wall_colliders: wall_colliders,
             next_bullet_id: 0,
             tick: 0,
             map,
@@ -277,8 +277,8 @@ impl PhysicsWorld {
 
         // Handle firing
         for (&id, input) in inputs {
-            if input.fire {
-                if let Some(tank) = self.tanks.get(&id) {
+            if input.fire
+                && let Some(tank) = self.tanks.get(&id) {
                     if !tank.alive || tank.bullet_count >= MAX_BULLETS_PER_TANK {
                         continue;
                     }
@@ -330,7 +330,6 @@ impl PhysicsWorld {
                         events.push(GameEvent::BulletFired { owner: id, x: bx, y: by, vx, vy });
                     }
                 }
-            }
         }
 
         // Step physics
@@ -428,11 +427,10 @@ impl PhysicsWorld {
 
         // Decrement bullet counts for removed bullets
         for owner in &removed_owners {
-            if let Some(tank) = self.tanks.get_mut(owner) {
-                if tank.bullet_count > 0 {
+            if let Some(tank) = self.tanks.get_mut(owner)
+                && tank.bullet_count > 0 {
                     tank.bullet_count -= 1;
                 }
-            }
         }
 
         self.tick += 1;

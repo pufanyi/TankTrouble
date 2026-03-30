@@ -28,13 +28,13 @@ impl GameMap {
         let cell_w = width / 6.0;
         let cell_h = height / 4.0;
 
-        let mut walls = Vec::new();
-
         // Outer boundary walls
-        walls.push(Wall { x1: 0.0, y1: 0.0, x2: width, y2: 0.0, thickness: t }); // top
-        walls.push(Wall { x1: 0.0, y1: height, x2: width, y2: height, thickness: t }); // bottom
-        walls.push(Wall { x1: 0.0, y1: 0.0, x2: 0.0, y2: height, thickness: t }); // left
-        walls.push(Wall { x1: width, y1: 0.0, x2: width, y2: height, thickness: t }); // right
+        let mut walls = vec![
+            Wall { x1: 0.0, y1: 0.0, x2: width, y2: 0.0, thickness: t }, // top
+            Wall { x1: 0.0, y1: height, x2: width, y2: height, thickness: t }, // bottom
+            Wall { x1: 0.0, y1: 0.0, x2: 0.0, y2: height, thickness: t }, // left
+            Wall { x1: width, y1: 0.0, x2: width, y2: height, thickness: t }, // right
+        ];
 
         // Internal walls — a selection of segments that create the classic maze feel.
         // Each wall is a segment between grid intersections.
